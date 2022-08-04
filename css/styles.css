@@ -53,6 +53,7 @@ textarea {
 
 #date {
   width: 70%;
+  cursor: pointer;
 }
 
 #slider {

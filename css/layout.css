@@ -24,6 +24,11 @@
   justify-content: end;
 }
 
+.align-items-center {
+  display: flex;
+  align-items: center;
+}
+
 .column-full,
 .column-half {
   width: 100%;
@@ -41,6 +46,16 @@
 input,
 textarea {
   margin: 1rem 0;
+}
+
+#heart {
+  width: 5%;
+}
+
+.space-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 @media screen and (min-width: 768px) {
