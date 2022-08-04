@@ -1,0 +1,16 @@
+body {
+  font-family: Righteous, Roboto, sans-serif;
+  line-height: 1.6;
+}
+
+.color-green {
+  color: #1bb55c;
+}
+
+.color-white {
+  color: white;
+}
+
+.navbar-container {
+  background-color: #202020;
+}
