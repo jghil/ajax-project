@@ -56,7 +56,7 @@
               </div>
               <div class="space-between">
                 <label for="slider">Manga Enjoyment Meter</label>
-                <img src="/images/heart2.png" alt="heart" id="heart">
+                <img src="/images/heart2.png" alt="heart" class="heart">
               </div>
               <div>
                 <input
@@ -98,8 +98,63 @@
         </div>
       </form>
     </div>
-    <div data-view="reviews">
-      <ul></ul>
+    <div data-view="reviews" id="reviews">
+      <div class="container">
+        <div class="row">
+          <div class="column-full">
+            <h1>Your Reviews</h1>
+          </div>
+        </div>
+        <ul class="no-bullets">
+          <li class="padding li-margin-bottom">
+            <div class="row white-background-color">
+              <div class="column-half-reviews align-items-stretch">
+                <img src="http://prodimage.images-bn.com/pimages/9781421519197_p0_v2_s1200x630.jpg" class="images">
+              </div>
+              <div class="column-half padding-reviews">
+                <h1 class="margin-top">Pluto</h1>
+                <div class="row space-between">
+                  <p>Manga Enjoyment Slider</p>
+                  <img src="/images/heart2.png" class="heart">
+                </div>
+                <input type="range" value="50" disabled="true" class="no-margin">
+                <div class="row align-items-baseline">
+                  <p class="margin-right">Date</p>
+                  <span class="color-blue">08/22/2022</span>
+                </div>
+                <p class="roboto padding-bottom">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Excepturi provident harum dignissimos deserunt rerum dicta blanditiis iure. Numquam, cupiditate. Vitae illo minima sequi necessitatibus dignissimos ipsam. Ipsam perspiciatis quasi velit obcaecati, maiores autem est? Harum quae magnam rem quibusdam inventore consectetur quidem voluptate ipsam, provident reiciendis ex dolorum pariatur, ipsum nisi repellendus cumque soluta dolor. Non magni amet quos, quam at, quae consequuntur error ut illum dolor tempora beatae accusamus nisi alias, qui sunt quas. Dolor facilis excepturi ipsam dignissimos commodi tempora corrupti quibusdam architecto modi magnam consequatur quae, sapiente eligendi officia fugiat officiis! Consequuntur aperiam quia culpa dolore aut.
+                </p>
+              </div>
+            </div>
+          </li>
+          <li class="padding li-margin-bottom">
+            <div class="row white-background-color">
+              <div class="column-half-reviews align-items-stretch">
+                <img src="https://i.pinimg.com/originals/4d/cb/eb/4dcbebce7eff58ad0faa9d7bac4019f5.webp" class="images">
+              </div>
+              <div class="column-half padding-reviews">
+                <h1 class="margin-top">Pluto</h1>
+                <div class="row space-between">
+                  <p>Manga Enjoyment Slider</p>
+                  <img src="/images/heart2.png" class="heart">
+                </div>
+                <input type="range" value="50" disabled="true" class="no-margin">
+                <div class="row align-items-baseline">
+                  <p class="margin-right">Date</p><span class="color-blue">08/22/2022</span>
+                </div>
+                <p class="roboto padding-bottom">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Excepturi provident harum dignissimos deserunt rerum
+                  dicta blanditiis iure. Numquam, cupiditate. Vitae illo minima sequi necessitatibus dignissimos ipsam. Ipsam
+                  perspiciatis quasi velit obcaecati, maiores autem est? Harum quae magnam rem quibusdam inventore consectetur
+                  quidem voluptate ipsam, provident reiciendis ex dolorum pariatur, ipsum nisi repellendus cumque soluta dolor.
+                  Non magni amet quos, quam at, quae consequuntur error ut illum dolor tempora beatae accusamus nisi alias, qui
+                  sunt quas. Dolor facilis excepturi ipsam dignissimos commodi tempora corrupti quibusdam architecto modi magnam
+                  consequatur quae, sapiente eligendi officia fugiat officiis! Consequuntur aperiam quia culpa dolore aut.
+                </p>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
   </main>
   <script src="js/data.js"></script>

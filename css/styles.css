@@ -22,6 +22,10 @@ body {
   color: white;
 }
 
+.color-blue {
+  color: #007bff;
+}
+
 .navbar-container {
   background-color: #202020;
 }
@@ -60,6 +64,11 @@ textarea {
 
 #slider:hover {
   opacity: 1;
+}
+
+.white-background-color {
+  background-color: white;
+  border-radius: 5px;
 }
 
 label {

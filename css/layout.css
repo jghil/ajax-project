@@ -29,8 +29,25 @@
   align-items: center;
 }
 
+.align-items-stretch {
+  display: flex;
+  align-items: stretch;
+}
+
+.no-margin {
+  margin: 0;
+}
+
+.padding-bottom {
+  margin: 0 0 1.5rem;
+}
+
 .column-full,
 .column-half {
+  width: 100%;
+}
+
+.column-half-reviews {
   width: 100%;
 }
 
@@ -40,7 +57,11 @@
 }
 
 .margin-top {
-  margin-top: 1rem;
+  margin: 1rem 0 0;
+}
+
+.li-margin-bottom {
+  margin: 0 0 1.5rem;
 }
 
 input,
@@ -48,7 +69,7 @@ textarea {
   margin: 1rem 0;
 }
 
-#heart {
+.heart {
   width: 5%;
 }
 
@@ -56,6 +77,24 @@ textarea {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.no-bullets {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.align-items-baseline {
+  align-items: baseline;
+}
+
+.margin-right {
+  margin-right: 0.75rem;
+}
+
+.padding-reviews {
+  padding: 0 0.75rem;
 }
 
 @media screen and (min-width: 768px) {
@@ -70,6 +109,18 @@ textarea {
   }
 
   .column-half {
+    width: 50%;
+  }
+
+  .padding {
+    padding: 0 0.75rem;
+  }
+
+  .padding-reviews {
+    padding: 0 1rem;
+  }
+
+  .column-half-reviews {
     width: 50%;
   }
 }
