@@ -16,9 +16,9 @@ function reviewSubmit(review) {
     notes: $reviewForm.elements.notes.value,
     photoUrl: $reviewForm.elements.photoUrl.value
   };
-  data.reviews.unshift(newReview);
   $placeholderImage.setAttribute('src', '/images/placeholder-image-square.jpg');
   $reviewForm.reset();
+  data.reviews.unshift(newReview);
 }
 
 $reviewForm.addEventListener('submit', reviewSubmit);
