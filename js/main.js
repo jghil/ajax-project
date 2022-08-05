@@ -1,6 +1,7 @@
 var $newPhotoPreview = document.querySelector('#photoUrl');
 var $placeholderImage = document.querySelector('#placeholderimage');
 var $reviewForm = document.querySelector('#review-form');
+var $ul = document.querySelector('ul');
 
 $newPhotoPreview.addEventListener('input', function (e) {
   $placeholderImage.setAttribute('src', e.target.value);
@@ -17,23 +18,22 @@ function reviewSubmit(review) {
     photoUrl: $reviewForm.elements.photoUrl.value
   };
   data.reviews.unshift(newReview);
+  var newMangaReview = renderReview(newReview);
+  $ul.prepend(newMangaReview);
   $placeholderImage.setAttribute('src', '/images/placeholder-image-square.jpg');
   $reviewForm.reset();
 }
 
 function renderReview(data) {
   var $li = document.createElement('li');
-  $li.setAttribute('class', 'padding');
-  $li.setAttribute('class', 'li-margin-bottom');
+  $li.setAttribute('class', 'padding li-margin-bottom');
 
   var $divRow = document.createElement('div');
-  $divRow.setAttribute('class', 'row');
-  $divRow.setAttribute('class', 'white-background-color');
+  $divRow.setAttribute('class', 'row white-background-color');
   $li.appendChild($divRow);
 
   var $columnHalf = document.createElement('div');
-  $columnHalf.setAttribute('class', 'column-half-reviews');
-  $columnHalf.setAttribute('class', 'align-items-stretch');
+  $columnHalf.setAttribute('class', 'column-half-reviews align-items-flex-start');
   $divRow.appendChild($columnHalf);
 
   var $photoUrl = document.createElement('img');
@@ -42,8 +42,7 @@ function renderReview(data) {
   $columnHalf.appendChild($photoUrl);
 
   var $columnHalfTwo = document.createElement('div');
-  $columnHalfTwo.setAttribute('class', 'column-half');
-  $columnHalfTwo.setAttribute('class', 'padding-reviews');
+  $columnHalfTwo.setAttribute('class', 'column-half padding-reviews');
   $divRow.appendChild($columnHalfTwo);
 
   var $mangaTitle = document.createElement('h1');
@@ -52,8 +51,7 @@ function renderReview(data) {
   $columnHalfTwo.appendChild($mangaTitle);
 
   var $divRowMeterTitle = document.createElement('div');
-  $divRowMeterTitle.setAttribute('class', 'row');
-  $divRowMeterTitle.setAttribute('class', 'space-between');
+  $divRowMeterTitle.setAttribute('class', 'row space-between');
   $columnHalfTwo.appendChild($divRowMeterTitle);
 
   var $enjoymentMeter = document.createElement('p');
@@ -67,14 +65,13 @@ function renderReview(data) {
 
   var $enjoymentMeterSlider = document.createElement('input');
   $enjoymentMeterSlider.setAttribute('type', 'range');
-  $enjoymentMeterSlider.setAttribute('value', data.slider);
+  $enjoymentMeterSlider.setAttribute('value', data.enjoyment);
   $enjoymentMeterSlider.setAttribute('disabled', 'true');
-  $enjoymentMeterSlider.setAttribute('class', 'no-margin');
+  $enjoymentMeterSlider.setAttribute('class', 'no-margin slider');
   $columnHalfTwo.appendChild($enjoymentMeterSlider);
 
   var $dateDivRow = document.createElement('div');
-  $dateDivRow.setAttribute('class', 'row');
-  $dateDivRow.setAttribute('class', 'align-items-baseline');
+  $dateDivRow.setAttribute('class', 'row align-items-baseline');
   $columnHalfTwo.appendChild($dateDivRow);
 
   var $date = document.createElement('p');
@@ -87,15 +84,18 @@ function renderReview(data) {
   $dateData.textContent = data.date;
   $dateDivRow.appendChild($dateData);
 
-  var $notes = document.createElement('p');
-  $notes.setAttribute('class', 'roboto');
-  $notes.setAttribute('class', 'padding-bottom');
-  $notes.textContent = data.notes;
-  $columnHalfTwo.appendChild($notes);
+  var $bestParts = document.createElement('p');
+  $bestParts.setAttribute('class', 'roboto padding-bottom line-height');
+  $bestParts.textContent = data.notes;
+  $columnHalfTwo.appendChild($bestParts);
 
   return $li;
 }
 
-renderReview(data.entries[0]);
-
+document.addEventListener('DOMContentLoaded', function (e) {
+  for (var review = 0; review < data.reviews.length; review++) {
+    var newMangaReviews = renderReview(data.reviews[review]);
+    $ul.appendChild(newMangaReviews);
+  }
+});
 $reviewForm.addEventListener('submit', reviewSubmit);

@@ -56,13 +56,13 @@ textarea {
   cursor: pointer;
 }
 
-#slider {
+.slider {
   cursor: pointer;
   height: 30px;
   padding: 0;
 }
 
-#slider:hover {
+.slider:hover {
   opacity: 1;
 }
 

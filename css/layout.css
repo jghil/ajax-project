@@ -29,9 +29,9 @@
   align-items: center;
 }
 
-.align-items-stretch {
+.align-items-flex-start {
   display: flex;
-  align-items: stretch;
+  align-items: flex-start;
 }
 
 .no-margin {
@@ -40,6 +40,10 @@
 
 .padding-bottom {
   margin: 0 0 1.5rem;
+}
+
+.line-height {
+  line-height: 1.5;
 }
 
 .column-full,
