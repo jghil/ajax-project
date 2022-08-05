@@ -96,5 +96,6 @@ function renderReview(data) {
   return $li;
 }
 
-renderReview();
+renderReview(data.entries[0]);
+
 $reviewForm.addEventListener('submit', reviewSubmit);
