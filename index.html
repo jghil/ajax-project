@@ -15,9 +15,12 @@
 <body>
   <header>
     <div class="navbar-container">
-      <div class="row">
-        <div class="column-full">
-          <h2 class="color-green font-weight-400"><span class="color-white">M</span>anga &gt; Anime</h2>
+      <div class="row justify-content-flex-start align-items-baseline">
+        <div class="column-half-navbar">
+          <h2 class="color-green font-weight-400"><a href="#review-form" class="navbar-items"><span class="color-white">M</span>anga &gt; Anime</a></h2>
+        </div>
+        <div class="column-half-navbar">
+          <h3 class="color-green font-weight-400 justify-content-flex-end"><a href="#reviews" class="navbar-items">Reviews</a></h3>
         </div>
       </div>
     </div>
@@ -92,7 +95,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="column-full justify-content-end">
+            <div class="column-full justify-content-flex-end">
               <button type="submit" id="new-review-button" class="button righteous">SAVE</button>
             </div>
           </div>
@@ -102,8 +105,9 @@
     <div data-view="reviews" id="reviews">
       <div class="container">
         <div class="row">
-          <div class="column-full">
+          <div class="column-full space-between align-items-baseline">
             <h1>Your Reviews</h1>
+            <p><a href="#review-form" class="button righteous">NEW</a></p>
           </div>
         </div>
         <ul class="no-bullets">
