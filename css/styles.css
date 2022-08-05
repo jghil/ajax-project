@@ -1,5 +1,6 @@
 body {
   font-family: Righteous, Roboto, sans-serif;
+  background-color: #f6f6f6;
 }
 
 .container {
@@ -99,4 +100,8 @@ textarea:focus {
 
 .navbar-items:hover {
   color: #25eb78;
+}
+
+.empty-reviews {
+  text-align: center;
 }

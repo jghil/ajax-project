@@ -1,7 +1,15 @@
 var $newPhotoPreview = document.querySelector('#photoUrl');
 var $placeholderImage = document.querySelector('#placeholderimage');
 var $reviewForm = document.querySelector('#review-form');
+var $hiddenReviewForm = document.querySelector('#review-form', 'hidden');
 var $ul = document.querySelector('ul');
+var $reviews = document.querySelector('#reviews');
+var $hiddenReviews = document.querySelector('#reviews', '.hidden');
+var $hiddenEmptyReviews = document.querySelector('.empty-reviews', '.font-weight-400', '.hidden');
+var $emptyReviews = document.querySelector('.empty-reviews', '.font-weight-400');
+var $reviewsButton = document.querySelector('#reviews-button');
+var $newButton = document.querySelector('#new-button');
+var $mangaAnime = document.querySelector('#mangaAnime');
 
 $newPhotoPreview.addEventListener('input', function (e) {
   $placeholderImage.setAttribute('src', e.target.value);
@@ -22,6 +30,7 @@ function reviewSubmit(review) {
   $ul.prepend(newMangaReview);
   $placeholderImage.setAttribute('src', '/images/placeholder-image-square.jpg');
   $reviewForm.reset();
+  viewSwap('reviews');
 }
 
 function renderReview(data) {
@@ -46,7 +55,7 @@ function renderReview(data) {
   $divRow.appendChild($columnHalfTwo);
 
   var $mangaTitle = document.createElement('h1');
-  $mangaTitle.setAttribute('class', 'margin-top');
+  $mangaTitle.setAttribute('class', 'margin-top font-weight-400');
   $mangaTitle.textContent = data.title;
   $columnHalfTwo.appendChild($mangaTitle);
 
@@ -92,10 +101,48 @@ function renderReview(data) {
   return $li;
 }
 
+function viewSwap(dataView) {
+  data.view = dataView;
+  if (dataView === 'review-form') {
+    $reviews.className = 'hidden';
+    $emptyReviews.className = 'empty-entries font-weight-400 hidden';
+    $hiddenReviewForm.classList.remove('hidden');
+    document.getElementById('review-form').reset();
+    $placeholderImage.setAttribute('src', 'images/placeholder-image-square.jpg');
+  } else if (dataView === 'reviews') {
+    if (data.reviews.length === 0) {
+      $reviewForm.className = 'hidden';
+      $hiddenEmptyReviews.className = 'empty-reviews font-weight-400';
+      $hiddenReviews.classList.remove('hidden');
+    } else if (data.reviews.length > 0) {
+      $reviewForm.className = 'hidden';
+      $emptyReviews.className = 'empty-entries font-weight-400 hidden';
+      $hiddenReviews.classList.remove('hidden');
+    }
+  }
+}
+
+$reviewsButton.addEventListener('click', function (e) {
+  e.preventDefault();
+  viewSwap('reviews');
+});
+
+$newButton.addEventListener('click', function (e) {
+  e.preventDefault();
+  viewSwap('review-form');
+});
+
+$mangaAnime.addEventListener('click', function (e) {
+  e.preventDefault();
+  viewSwap('review-form');
+});
+
 document.addEventListener('DOMContentLoaded', function (e) {
   for (var review = 0; review < data.reviews.length; review++) {
     var newMangaReviews = renderReview(data.reviews[review]);
     $ul.appendChild(newMangaReviews);
   }
+  viewSwap(data.view);
 });
+
 $reviewForm.addEventListener('submit', reviewSubmit);
