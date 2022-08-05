@@ -21,4 +21,19 @@ function reviewSubmit(review) {
   data.reviews.unshift(newReview);
 }
 
+// function renderReview(data) {
+//   var $li = document.createElement('li');
+
+//   var $divRow = document.createElement('div');
+//   $divRow.setAttribute('class', 'row');
+//   $li.appendChild($divRow);
+
+//   var $columnHalf = document.createElement('div');
+//   $columnHalf.setAttribute('class', 'column-half');
+//   $divRow.appendChild($columnHalf);
+
+//   var $photoUrl = document.createElement('img');
+//   $photoUrl.setAttribute('src', data.photoUrl);
+// }
+
 $reviewForm.addEventListener('submit', reviewSubmit);
