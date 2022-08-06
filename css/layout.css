@@ -98,10 +98,6 @@ textarea {
   align-items: center;
 }
 
-.space-between-style {
-  justify-content: space-between;
-}
-
 .no-bullets {
   list-style-type: none;
   margin: 0;
@@ -118,10 +114,6 @@ textarea {
 
 .padding-reviews {
   padding: 0 0.75rem;
-}
-
-.position-fixed {
-  position: fixed;
 }
 
 @media screen and (min-width: 768px) {
