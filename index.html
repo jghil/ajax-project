@@ -15,9 +15,12 @@
 <body>
   <header>
     <div class="navbar-container">
-      <div class="row">
-        <div class="column-full">
-          <h2 class="color-green font-weight-400"><span class="color-white">M</span>anga &gt; Anime</h2>
+      <div class="row justify-content-flex-start align-items-baseline">
+        <div class="column-half-navbar">
+          <h2 class="color-green font-weight-400"><a href="#review-form" class="navbar-items" id="mangaAnime"><span class="color-white">M</span>anga &gt; Anime</a></h2>
+        </div>
+        <div class="column-half-navbar">
+          <h3 class="color-green font-weight-400 justify-content-flex-end" id="reviews-button"><a href="#reviews" class="navbar-items">Reviews</a></h3>
         </div>
       </div>
     </div>
@@ -56,7 +59,7 @@
               </div>
               <div class="space-between">
                 <label for="slider">Manga Enjoyment Meter</label>
-                <img src="/images/heart2.png" alt="heart" id="heart">
+                <img src="/images/heart2.png" alt="heart" class="heart">
               </div>
               <div>
                 <input
@@ -65,7 +68,8 @@
                 min="1"
                 max="100"
                 value="0"
-                id="slider">
+                id="slider"
+                class="slider">
               </div>
               <label for="date">Date</label>
               <div>
@@ -91,12 +95,25 @@
             </div>
           </div>
           <div class="row">
-            <div class="column-full justify-content-end">
+            <div class="column-full justify-content-flex-end">
               <button type="submit" id="new-review-button" class="button righteous">SAVE</button>
             </div>
           </div>
         </div>
       </form>
+    </div>
+    <div data-view="reviews" id="reviews" class="hidden">
+      <div class="container">
+        <div class="row">
+          <div class="column-full space-between align-items-baseline">
+            <h1 class="font-weight-400">Your Reviews</h1>
+            <p><a href="#review-form" class="button righteous" id="new-button">NEW</a></p>
+          </div>
+        </div>
+        <h3 class="empty-reviews font-weight-400 hidden">Empty.. Go read some manga!</h3>
+        <ul class="no-bullets">
+        </ul>
+      </div>
     </div>
   </main>
   <script src="js/data.js"></script>

@@ -7,12 +7,12 @@ var data = {
   nextEntryId: 1
 };
 
-var previousDataJSON = localStorage.getItem('review-forms');
+var previousDataJSON = localStorage.getItem('blah');
 if (previousDataJSON !== null) {
   data = JSON.parse(previousDataJSON);
 }
 
 window.addEventListener('beforeunload', function (e) {
   var dataJSON = JSON.stringify(data);
-  localStorage.setItem('review-forms', dataJSON);
+  localStorage.setItem('blah', dataJSON);
 });
