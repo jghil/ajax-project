@@ -155,23 +155,4 @@ document.addEventListener('DOMContentLoaded', function (e) {
   viewSwap(data.view);
 });
 
-document.getElementById('reviews').addEventListener('click', function (e) {
-  if (e.target.tagName === 'I') {
-    viewSwap('review-form');
-    for (var i = 0; i < data.reviews.length; i++) {
-      var $closestLi = e.target.closest('li');
-      var $closestLiId = $closestLi.getAttribute('data-entry-id');
-      var parsedId = parseInt($closestLiId);
-      if (parsedId === data.reviews[i].entryId) {
-        data.editing = data.reviews[i];
-        $reviewForm.elements.title.value = data.reviews[i].title;
-        $reviewForm.elements.photoUrl.value = data.reviews[i].photoUrl;
-        $placeholderImage.setAttribute('src', $reviewForm.elements.photoUrl.value);
-        $reviewForm.elements.notes.value = data.reviews[i].notes;
-        $reviewForm.elements.slider.value = data.reviews[i].enjoyment;
-        $reviewForm.elements.date.value = data.reviews[i].date;
-      }
-    }
-  }
-});
 $reviewForm.addEventListener('submit', reviewSubmit);
