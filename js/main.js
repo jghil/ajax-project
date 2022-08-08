@@ -10,6 +10,7 @@ var $emptyReviews = document.querySelector('.empty-reviews', '.font-weight-400')
 var $reviewsButton = document.querySelector('#reviews-button');
 var $newButton = document.querySelector('#new-button');
 var $mangaAnime = document.querySelector('#mangaAnime');
+var $reviewFormTitle = document.querySelector('#review-form-title');
 
 $newPhotoPreview.addEventListener('input', function (e) {
   $placeholderImage.setAttribute('src', e.target.value);
@@ -17,17 +18,42 @@ $newPhotoPreview.addEventListener('input', function (e) {
 
 function reviewSubmit(review) {
   review.preventDefault();
-  var newReview = {
-    entryId: data.nextEntryId++,
-    title: $reviewForm.elements.title.value,
-    date: $reviewForm.elements.date.value,
-    enjoyment: $reviewForm.elements.slider.value,
-    notes: $reviewForm.elements.notes.value,
-    photoUrl: $reviewForm.elements.photoUrl.value
-  };
-  data.reviews.unshift(newReview);
-  var newMangaReview = renderReview(newReview);
-  $ul.prepend(newMangaReview);
+  if (data.editing === null) {
+    var newReview = {
+      entryId: data.nextEntryId++,
+      title: $reviewForm.elements.title.value,
+      date: $reviewForm.elements.date.value,
+      enjoyment: $reviewForm.elements.slider.value,
+      notes: $reviewForm.elements.notes.value,
+      photoUrl: $reviewForm.elements.photoUrl.value
+    };
+    data.reviews.unshift(newReview);
+    var newMangaReview = renderReview(newReview);
+    $ul.prepend(newMangaReview);
+  } else {
+    var editReview = {
+      entryId: data.editing.entryId,
+      title: $reviewForm.elements.title.value,
+      date: $reviewForm.elements.date.value,
+      enjoyment: $reviewForm.elements.slider.value,
+      notes: $reviewForm.elements.notes.value,
+      photoUrl: $reviewForm.elements.photoUrl.value
+    };
+    for (var entry = 0; entry < data.reviews.length; entry++) {
+      if (data.editing.entryId === data.reviews[entry].entryId) {
+        data.reviews[entry] = editReview;
+      }
+    }
+    var $liList = document.querySelectorAll('li');
+    for (var liIndex = 0; liIndex < $liList.length; liIndex++) {
+      if (data.editing.entryId === parseInt($liList[liIndex].getAttribute('data-entry-id'))) {
+        var updatedReview = renderReview(editReview);
+        $liList[liIndex].replaceWith(updatedReview);
+      }
+    }
+    data.editing = null;
+  }
+  $reviewFormTitle.textContent = 'New Manga Reviews';
   $placeholderImage.setAttribute('src', '/images/placeholder-image-square.jpg');
   $reviewForm.reset();
   viewSwap('reviews');
@@ -155,4 +181,24 @@ document.addEventListener('DOMContentLoaded', function (e) {
   viewSwap(data.view);
 });
 
+document.getElementById('reviews').addEventListener('click', function (e) {
+  if (e.target.tagName === 'I') {
+    viewSwap('review-form');
+    for (var i = 0; i < data.reviews.length; i++) {
+      var $closestLi = e.target.closest('li');
+      var $closestLiId = $closestLi.getAttribute('data-entry-id');
+      var parsedId = parseInt($closestLiId);
+      if (parsedId === data.reviews[i].entryId) {
+        data.editing = data.reviews[i];
+        $reviewForm.elements.title.value = data.reviews[i].title;
+        $reviewForm.elements.photoUrl.value = data.reviews[i].photoUrl;
+        $placeholderImage.setAttribute('src', $reviewForm.elements.photoUrl.value);
+        $reviewForm.elements.notes.value = data.reviews[i].notes;
+        $reviewForm.elements.slider.value = data.reviews[i].enjoyment;
+        $reviewForm.elements.date.value = data.reviews[i].date;
+      }
+    }
+    $reviewFormTitle.textContent = 'Edit Review';
+  }
+});
 $reviewForm.addEventListener('submit', reviewSubmit);
