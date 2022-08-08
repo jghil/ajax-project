@@ -19,6 +19,15 @@ body {
   font-weight: 400;
 }
 
+i {
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+i:hover {
+  color: #25eb78;
+}
+
 .color-green {
   color: #1bb55c;
 }

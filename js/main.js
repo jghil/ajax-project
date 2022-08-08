@@ -36,6 +36,7 @@ function reviewSubmit(review) {
 function renderReview(data) {
   var $li = document.createElement('li');
   $li.setAttribute('class', 'padding li-margin-bottom');
+  $li.setAttribute('data-entry-id', data.entryId);
 
   var $divRow = document.createElement('div');
   $divRow.setAttribute('class', 'row white-background-color');
@@ -54,10 +55,19 @@ function renderReview(data) {
   $columnHalfTwo.setAttribute('class', 'column-half padding-reviews');
   $divRow.appendChild($columnHalfTwo);
 
+  var $editDivRow = document.createElement('div');
+  $editDivRow.setAttribute('class', 'row space-between');
+  $columnHalfTwo.appendChild($editDivRow);
+
   var $mangaTitle = document.createElement('h1');
   $mangaTitle.setAttribute('class', 'margin-top font-weight-400');
   $mangaTitle.textContent = data.title;
-  $columnHalfTwo.appendChild($mangaTitle);
+  $editDivRow.appendChild($mangaTitle);
+
+  var $editIcon = document.createElement('i');
+  $editIcon.setAttribute('class', 'fa-solid fa-pen color-green margin-top');
+  $editIcon.setAttribute('data-entry-id', data.entryId);
+  $editDivRow.appendChild($editIcon);
 
   var $divRowMeterTitle = document.createElement('div');
   $divRowMeterTitle.setAttribute('class', 'row space-between');
@@ -145,4 +155,23 @@ document.addEventListener('DOMContentLoaded', function (e) {
   viewSwap(data.view);
 });
 
+document.getElementById('reviews').addEventListener('click', function (e) {
+  if (e.target.tagName === 'I') {
+    viewSwap('review-form');
+    for (var i = 0; i < data.reviews.length; i++) {
+      var $closestLi = e.target.closest('li');
+      var $closestLiId = $closestLi.getAttribute('data-entry-id');
+      var parsedId = parseInt($closestLiId);
+      if (parsedId === data.reviews[i].entryId) {
+        data.editing = data.reviews[i];
+        $reviewForm.elements.title.value = data.reviews[i].title;
+        $reviewForm.elements.photoUrl.value = data.reviews[i].photoUrl;
+        $placeholderImage.setAttribute('src', $reviewForm.elements.photoUrl.value);
+        $reviewForm.elements.notes.value = data.reviews[i].notes;
+        $reviewForm.elements.slider.value = data.reviews[i].enjoyment;
+        $reviewForm.elements.date.value = data.reviews[i].date;
+      }
+    }
+  }
+});
 $reviewForm.addEventListener('submit', reviewSubmit);
