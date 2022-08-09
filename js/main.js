@@ -11,6 +11,7 @@ var $reviewsButton = document.querySelector('#reviews-button');
 var $newButton = document.querySelector('#new-button');
 var $mangaAnime = document.querySelector('#mangaAnime');
 var $reviewFormTitle = document.querySelector('#review-form-title');
+// var $mangaResultsList = document.querySelector('#manga-results-list');
 
 $newPhotoPreview.addEventListener('input', function (e) {
   $placeholderImage.setAttribute('src', e.target.value);
