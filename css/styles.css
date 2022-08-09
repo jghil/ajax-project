@@ -114,3 +114,9 @@ textarea:focus {
 .empty-reviews {
   text-align: center;
 }
+
+.color-gray {
+  background-color: #dfdfdf;
+  height: 1px;
+  border: none;
+}

@@ -83,6 +83,10 @@
   margin: 0 0 1.5rem;
 }
 
+.half-margin-bottom {
+  margin-bottom: 0.5rem;
+}
+
 input,
 textarea {
   margin: 1rem 0;
