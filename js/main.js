@@ -13,6 +13,8 @@ var $mangaAnime = document.querySelector('#mangaAnime');
 var $reviewFormTitle = document.querySelector('#review-form-title');
 var $mangaSearchForm = document.querySelector('#search-form');
 var $mangaResultsList = document.querySelector('#manga-results-list');
+var $searchButton = document.querySelector('#search-button');
+var $searchResultsView = document.querySelector('#search-results-view');
 
 $newPhotoPreview.addEventListener('input', function (e) {
   $placeholderImage.setAttribute('src', e.target.value);
@@ -143,7 +145,9 @@ function viewSwap(dataView) {
   data.view = dataView;
   if (dataView === 'review-form') {
     $reviews.className = 'hidden';
+    $mangaSearchForm.className = 'hidden';
     $emptyReviews.className = 'empty-entries font-weight-400 hidden';
+    $searchResultsView.className = 'hidden';
     $hiddenReviewForm.classList.remove('hidden');
     document.getElementById('review-form').reset();
     $placeholderImage.setAttribute('src', 'images/placeholder-image-square.jpg');
@@ -152,21 +156,35 @@ function viewSwap(dataView) {
       $reviewForm.className = 'hidden';
       $hiddenEmptyReviews.className = 'empty-reviews font-weight-400';
       $hiddenReviews.classList.remove('hidden');
+      $mangaSearchForm.className = 'hidden';
+      $searchResultsView.className = 'hidden';
     } else if (data.reviews.length > 0) {
       $reviewForm.className = 'hidden';
       $emptyReviews.className = 'empty-entries font-weight-400 hidden';
       $hiddenReviews.classList.remove('hidden');
+      $mangaSearchForm.className = 'hidden';
+      $searchResultsView.className = 'hidden';
     }
+  } else if (dataView === 'search-form') {
+    $reviewForm.className = 'hidden';
+    $reviews.className = 'hidden';
+    $searchResultsView.className = 'hidden';
+    $mangaSearchForm.classList.remove('hidden');
+  } else if (dataView === 'search-results-view') {
+    $reviewForm.className = 'hidden';
+    $reviews.className = 'hidden';
+    $mangaSearchForm.className = 'hidden';
+    $searchResultsView.classList.remove('hidden');
   }
 }
 
 function searchManga(manga) {
   var xhr = new XMLHttpRequest();
-  xhr.open('GET', 'https://api.jikan.moe/v4/manga?q=' + manga);
+  xhr.open('GET', 'https://api.jikan.moe/v4/manga?q=' + manga + '&sfw');
   xhr.responseType = 'json';
   xhr.addEventListener('load', function () {
     var $liManga = document.createElement('li');
-    $liManga.setAttribute('class', 'padding');
+    $liManga.setAttribute('class', 'padding margin-top-bottom');
     $mangaResultsList.appendChild($liManga);
 
     var $divMangaRow = document.createElement('div');
@@ -264,11 +282,12 @@ function searchManga(manga) {
     $columnHalfMangaTwo.appendChild($searchSynopsisValue);
 
     var $hr6 = document.createElement('hr');
-    $hr6.setAttribute('class', 'color-gray');
+    $hr6.setAttribute('class', 'color-gray padding-bottom');
     $columnHalfMangaTwo.appendChild($hr6);
   });
   xhr.send();
 }
+
 $mangaSearchForm.addEventListener('submit', function (e) {
   e.preventDefault();
   for (var i = 0; i < $mangaSearchForm.length; i++) {
@@ -277,6 +296,7 @@ $mangaSearchForm.addEventListener('submit', function (e) {
       searchManga(searchString);
     }
   }
+  viewSwap('search-results-view');
   document.getElementById('search-form').reset();
 });
 
@@ -293,6 +313,12 @@ $newButton.addEventListener('click', function (e) {
 $mangaAnime.addEventListener('click', function (e) {
   e.preventDefault();
   viewSwap('review-form');
+});
+
+$searchButton.addEventListener('click', function (e) {
+  e.preventDefault();
+  viewSwap('search-form');
+  document.getElementById('search-form').reset();
 });
 
 document.addEventListener('DOMContentLoaded', function (e) {
