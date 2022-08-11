@@ -3,6 +3,7 @@
 var data = {
   view: 'review-form',
   reviews: [],
+  search: [],
   editing: null,
   nextEntryId: 1
 };

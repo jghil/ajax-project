@@ -63,6 +63,8 @@ function reviewSubmit(review) {
   viewSwap('reviews');
 }
 
+$reviewForm.addEventListener('submit', reviewSubmit);
+
 function renderReview(data) {
   var $li = document.createElement('li');
   $li.setAttribute('class', 'padding li-margin-bottom');
@@ -180,9 +182,17 @@ function viewSwap(dataView) {
 
 function searchManga(manga) {
   var xhr = new XMLHttpRequest();
-  xhr.open('GET', 'https://api.jikan.moe/v4/manga?q=' + manga + '&sfw');
+  xhr.open('GET', 'https://api.jikan.moe/v4/manga?q=' + manga + '&type=manga');
   xhr.responseType = 'json';
   xhr.addEventListener('load', function () {
+    var newResult = {
+      image: xhr.response.data[0].images.jpg.image_url,
+      title: xhr.response.data[0].title,
+      author: xhr.response.data[0].authors[0].name,
+      chapters: xhr.response.data[0].chapters,
+      genres: xhr.response.data[0].genres[0].name,
+      synopsis: xhr.response.data[0].synopsis
+    };
     var $liManga = document.createElement('li');
     $liManga.setAttribute('class', 'padding margin-top-bottom');
     $mangaResultsList.appendChild($liManga);
@@ -196,7 +206,7 @@ function searchManga(manga) {
     $divMangaRow.appendChild($columnHalfManga);
 
     var $imgManga = document.createElement('img');
-    $imgManga.setAttribute('src', xhr.response.data[0].images.jpg.image_url);
+    $imgManga.setAttribute('src', newResult.image);
     $imgManga.setAttribute('class', 'images');
     $columnHalfManga.appendChild($imgManga);
 
@@ -206,7 +216,7 @@ function searchManga(manga) {
 
     var $searchTitle = document.createElement('h1');
     $searchTitle.setAttribute('class', 'font-weight-400 righteous margin-top half-margin-bottom');
-    $searchTitle.textContent = xhr.response.data[0].title;
+    $searchTitle.textContent = newResult.title;
     $columnHalfMangaTwo.appendChild($searchTitle);
 
     var $hr1 = document.createElement('hr');
@@ -224,7 +234,7 @@ function searchManga(manga) {
 
     var $searchAuthorValue = document.createElement('h3');
     $searchAuthorValue.setAttribute('class', 'font-weight-400 roboto no-margin');
-    $searchAuthorValue.textContent = xhr.response.data[0].authors[0].name;
+    $searchAuthorValue.textContent = newResult.author;
     $divRowSearchAuthor.appendChild($searchAuthorValue);
 
     var $hr2 = document.createElement('hr');
@@ -242,7 +252,7 @@ function searchManga(manga) {
 
     var $searchChaptersValue = document.createElement('h3');
     $searchChaptersValue.setAttribute('class', 'font-weight-400 roboto no-margin');
-    $searchChaptersValue.textContent = xhr.response.data[0].chapters;
+    $searchChaptersValue.textContent = newResult.chapters;
     $divRowSearchChapters.appendChild($searchChaptersValue);
 
     var $hr3 = document.createElement('hr');
@@ -260,7 +270,7 @@ function searchManga(manga) {
 
     var $searchGenreValue = document.createElement('h3');
     $searchGenreValue.setAttribute('class', 'font-weight-400 roboto no-margin');
-    $searchGenreValue.textContent = xhr.response.data[0].genres[0].name;
+    $searchGenreValue.textContent = newResult.genres;
     $divRowSearchGenre.appendChild($searchGenreValue);
 
     var $hr4 = document.createElement('hr');
@@ -278,7 +288,7 @@ function searchManga(manga) {
 
     var $searchSynopsisValue = document.createElement('p');
     $searchSynopsisValue.setAttribute('class', 'font-weight-400 roboto no-margin line-height');
-    $searchSynopsisValue.textContent = xhr.response.data[0].synopsis;
+    $searchSynopsisValue.textContent = newResult.synopsis;
     $columnHalfMangaTwo.appendChild($searchSynopsisValue);
 
     var $hr6 = document.createElement('hr');
@@ -288,11 +298,28 @@ function searchManga(manga) {
   xhr.send();
 }
 
+// $mangaSearchForm.addEventListener('submit', function (e) {
+//   e.preventDefault();
+//   $mangaResultsList.textContent = '';
+//   var mangaSearchResults = $mangaSearchForm.elements;
+//   for (var i = 0; i < mangaSearchResults.length; i++) {
+//     if (mangaSearchResults[i].nodeName === 'INPUT' && mangaSearchResults[i].type === 'text') {
+//       var searchString = mangaSearchResults[i].value;
+//       console.log(typeof searchString);
+//       searchManga(searchString);
+//     }
+//   }
+//   viewSwap('search-results-view');
+//   document.getElementById('search-form').reset();
+// });
+
 $mangaSearchForm.addEventListener('submit', function (e) {
   e.preventDefault();
-  for (var i = 0; i < $mangaSearchForm.length; i++) {
-    if ($mangaSearchForm[i].nodeName === 'INPUT' && $mangaSearchForm[i].type === 'text') {
-      var searchString = $mangaSearchForm[i].value.toLocaleLowerCase();
+  $mangaResultsList.textContent = '';
+  var mangaSearchResults = $mangaSearchForm.elements;
+  for (var i = 0; i < mangaSearchResults.length; i++) {
+    if (mangaSearchResults[i].nodeName === 'INPUT' && mangaSearchResults[i].type === 'text') {
+      var searchString = mangaSearchResults[i].value;
       searchManga(searchString);
     }
   }
@@ -349,5 +376,3 @@ document.getElementById('reviews').addEventListener('click', function (e) {
     $reviewFormTitle.textContent = 'Edit Review';
   }
 });
-
-$reviewForm.addEventListener('submit', reviewSubmit);
