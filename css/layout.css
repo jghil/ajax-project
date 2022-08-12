@@ -132,10 +132,10 @@ textarea {
   text-align: center;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 576px) {
   .navbar-container,
   .container {
-    max-width: 900px;
+    max-width: 1200px;
   }
 
   .column-full,
