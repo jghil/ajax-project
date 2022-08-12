@@ -58,7 +58,7 @@ function reviewSubmit(review) {
     data.editing = null;
   }
   $reviewFormTitle.textContent = 'New Manga Reviews';
-  $placeholderImage.setAttribute('src', '/images/placeholder-image-square.jpg');
+  $placeholderImage.setAttribute('src', 'images/placeholder-image-square.jpg');
   $reviewForm.reset();
   viewSwap('reviews');
 }
@@ -110,7 +110,7 @@ function renderReview(data) {
   $divRowMeterTitle.appendChild($enjoymentMeter);
 
   var $enjoymentMeterHeart = document.createElement('img');
-  $enjoymentMeterHeart.setAttribute('src', '/images/heart2.png');
+  $enjoymentMeterHeart.setAttribute('src', 'images/heart2.png');
   $enjoymentMeterHeart.setAttribute('class', 'heart');
   $divRowMeterTitle.appendChild($enjoymentMeterHeart);
 
@@ -350,6 +350,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
 });
 
 document.addEventListener('DOMContentLoaded', function (e) {
+  e.preventDefault();
   $mangaResultsList.textContent = '';
   var newMangaResult = renderSearch(data.search[0]);
   $mangaResultsList.appendChild(newMangaResult);
