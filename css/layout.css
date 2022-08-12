@@ -83,6 +83,14 @@
   margin: 0 0 1.5rem;
 }
 
+.half-margin-bottom {
+  margin-bottom: 0.5rem;
+}
+
+.margin-top-bottom {
+  margin: 1.5rem 0;
+}
+
 input,
 textarea {
   margin: 1rem 0;
@@ -112,14 +120,22 @@ textarea {
   margin-right: 0.75rem;
 }
 
+.margin-right-wide {
+  margin-right: 2rem;
+}
+
 .padding-reviews {
   padding: 0 0.75rem;
 }
 
-@media screen and (min-width: 768px) {
+.text-align-center {
+  text-align: center;
+}
+
+@media screen and (min-width: 576px) {
   .navbar-container,
   .container {
-    max-width: 900px;
+    max-width: 1200px;
   }
 
   .column-full,

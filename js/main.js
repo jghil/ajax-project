@@ -11,6 +11,10 @@ var $reviewsButton = document.querySelector('#reviews-button');
 var $newButton = document.querySelector('#new-button');
 var $mangaAnime = document.querySelector('#mangaAnime');
 var $reviewFormTitle = document.querySelector('#review-form-title');
+var $mangaSearchForm = document.querySelector('#search-form');
+var $mangaResultsList = document.querySelector('#manga-results-list');
+var $searchButton = document.querySelector('#search-button');
+var $searchResultsView = document.querySelector('#search-results-view');
 
 $newPhotoPreview.addEventListener('input', function (e) {
   $placeholderImage.setAttribute('src', e.target.value);
@@ -58,6 +62,8 @@ function reviewSubmit(review) {
   $reviewForm.reset();
   viewSwap('reviews');
 }
+
+$reviewForm.addEventListener('submit', reviewSubmit);
 
 function renderReview(data) {
   var $li = document.createElement('li');
@@ -141,7 +147,9 @@ function viewSwap(dataView) {
   data.view = dataView;
   if (dataView === 'review-form') {
     $reviews.className = 'hidden';
+    $mangaSearchForm.className = 'hidden';
     $emptyReviews.className = 'empty-entries font-weight-400 hidden';
+    $searchResultsView.className = 'hidden';
     $hiddenReviewForm.classList.remove('hidden');
     document.getElementById('review-form').reset();
     $placeholderImage.setAttribute('src', 'images/placeholder-image-square.jpg');
@@ -150,13 +158,166 @@ function viewSwap(dataView) {
       $reviewForm.className = 'hidden';
       $hiddenEmptyReviews.className = 'empty-reviews font-weight-400';
       $hiddenReviews.classList.remove('hidden');
+      $mangaSearchForm.className = 'hidden';
+      $searchResultsView.className = 'hidden';
     } else if (data.reviews.length > 0) {
       $reviewForm.className = 'hidden';
       $emptyReviews.className = 'empty-entries font-weight-400 hidden';
       $hiddenReviews.classList.remove('hidden');
+      $mangaSearchForm.className = 'hidden';
+      $searchResultsView.className = 'hidden';
     }
+  } else if (dataView === 'search-form') {
+    $reviewForm.className = 'hidden';
+    $reviews.className = 'hidden';
+    $searchResultsView.className = 'hidden';
+    $mangaSearchForm.classList.remove('hidden');
+  } else if (dataView === 'search-results-view') {
+    $reviewForm.className = 'hidden';
+    $reviews.className = 'hidden';
+    $mangaSearchForm.className = 'hidden';
+    $searchResultsView.classList.remove('hidden');
   }
 }
+
+function searchManga(manga) {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', 'https://api.jikan.moe/v4/manga?q=' + manga + '&type=manga');
+  xhr.responseType = 'json';
+  xhr.addEventListener('load', function () {
+    var newResult = {
+      image: xhr.response.data[0].images.jpg.image_url,
+      title: xhr.response.data[0].title,
+      author: xhr.response.data[0].authors[0].name,
+      chapters: xhr.response.data[0].chapters,
+      genres: xhr.response.data[0].genres[0].name,
+      synopsis: xhr.response.data[0].synopsis
+    };
+    data.search.unshift(newResult);
+    var newSearchResult = renderSearch(newResult);
+    $mangaResultsList.prepend(newSearchResult);
+  });
+  xhr.send();
+}
+
+function renderSearch(search) {
+  var $liManga = document.createElement('li');
+  $liManga.setAttribute('class', 'padding margin-top-bottom');
+
+  var $divMangaRow = document.createElement('div');
+  $divMangaRow.setAttribute('class', 'row white-background-color');
+  $liManga.appendChild($divMangaRow);
+
+  var $columnHalfManga = document.createElement('div');
+  $columnHalfManga.setAttribute('class', 'column-half-reviews align-items-flex-start');
+  $divMangaRow.appendChild($columnHalfManga);
+
+  var $imgManga = document.createElement('img');
+  $imgManga.setAttribute('src', search.image);
+  $imgManga.setAttribute('class', 'images');
+  $columnHalfManga.appendChild($imgManga);
+
+  var $columnHalfMangaTwo = document.createElement('div');
+  $columnHalfMangaTwo.setAttribute('class', 'column-half padding-reviews');
+  $divMangaRow.appendChild($columnHalfMangaTwo);
+
+  var $searchTitle = document.createElement('h1');
+  $searchTitle.setAttribute('class', 'font-weight-400 righteous margin-top half-margin-bottom');
+  $searchTitle.textContent = search.title;
+  $columnHalfMangaTwo.appendChild($searchTitle);
+
+  var $hr1 = document.createElement('hr');
+  $hr1.setAttribute('class', 'color-gray');
+  $columnHalfMangaTwo.appendChild($hr1);
+
+  var $divRowSearchAuthor = document.createElement('div');
+  $divRowSearchAuthor.setAttribute('class', 'row align-items-baseline');
+  $columnHalfMangaTwo.appendChild($divRowSearchAuthor);
+
+  var $searchAuthor = document.createElement('h3');
+  $searchAuthor.setAttribute('class', 'color-green font-weight-400 margin-right no-margin');
+  $searchAuthor.textContent = 'Author:';
+  $divRowSearchAuthor.appendChild($searchAuthor);
+
+  var $searchAuthorValue = document.createElement('h3');
+  $searchAuthorValue.setAttribute('class', 'font-weight-400 roboto no-margin');
+  $searchAuthorValue.textContent = search.author;
+  $divRowSearchAuthor.appendChild($searchAuthorValue);
+
+  var $hr2 = document.createElement('hr');
+  $hr2.setAttribute('class', 'color-gray');
+  $columnHalfMangaTwo.appendChild($hr2);
+
+  var $divRowSearchChapters = document.createElement('div');
+  $divRowSearchChapters.setAttribute('class', 'row align-items-baseline');
+  $columnHalfMangaTwo.appendChild($divRowSearchChapters);
+
+  var $searchChapters = document.createElement('h3');
+  $searchChapters.setAttribute('class', 'color-green font-weight-400 margin-right no-margin');
+  $searchChapters.textContent = 'Chapters:';
+  $divRowSearchChapters.appendChild($searchChapters);
+
+  var $searchChaptersValue = document.createElement('h3');
+  $searchChaptersValue.setAttribute('class', 'font-weight-400 roboto no-margin');
+  $searchChaptersValue.textContent = search.chapters;
+  $divRowSearchChapters.appendChild($searchChaptersValue);
+
+  var $hr3 = document.createElement('hr');
+  $hr3.setAttribute('class', 'color-gray');
+  $columnHalfMangaTwo.appendChild($hr3);
+
+  var $divRowSearchGenre = document.createElement('div');
+  $divRowSearchGenre.setAttribute('class', 'row align-items-baseline');
+  $columnHalfMangaTwo.appendChild($divRowSearchGenre);
+
+  var $searchGenre = document.createElement('h3');
+  $searchGenre.setAttribute('class', 'color-green font-weight-400 margin-right no-margin');
+  $searchGenre.textContent = 'Genre:';
+  $divRowSearchGenre.appendChild($searchGenre);
+
+  var $searchGenreValue = document.createElement('h3');
+  $searchGenreValue.setAttribute('class', 'font-weight-400 roboto no-margin');
+  $searchGenreValue.textContent = search.genres;
+  $divRowSearchGenre.appendChild($searchGenreValue);
+
+  var $hr4 = document.createElement('hr');
+  $hr4.setAttribute('class', 'color-gray');
+  $columnHalfMangaTwo.appendChild($hr4);
+
+  var $searchSynopsis = document.createElement('h3');
+  $searchSynopsis.setAttribute('class', 'color-green font-weight-400 margin-right no-margin half-margin-bottom');
+  $searchSynopsis.textContent = 'Synopsis:';
+  $columnHalfMangaTwo.appendChild($searchSynopsis);
+
+  var $hr5 = document.createElement('hr');
+  $hr5.setAttribute('class', 'color-gray');
+  $columnHalfMangaTwo.appendChild($hr5);
+
+  var $searchSynopsisValue = document.createElement('p');
+  $searchSynopsisValue.setAttribute('class', 'font-weight-400 roboto no-margin line-height');
+  $searchSynopsisValue.textContent = search.synopsis;
+  $columnHalfMangaTwo.appendChild($searchSynopsisValue);
+
+  var $hr6 = document.createElement('hr');
+  $hr6.setAttribute('class', 'color-gray padding-bottom');
+  $columnHalfMangaTwo.appendChild($hr6);
+
+  return $liManga;
+}
+
+$mangaSearchForm.addEventListener('submit', function (e) {
+  e.preventDefault();
+  $mangaResultsList.textContent = '';
+  var mangaSearchResults = $mangaSearchForm.elements;
+  for (var i = 0; i < mangaSearchResults.length; i++) {
+    if (mangaSearchResults[i].nodeName === 'INPUT' && mangaSearchResults[i].type === 'text') {
+      var searchString = mangaSearchResults[i].value;
+      searchManga(searchString);
+    }
+    viewSwap('search-results-view');
+    document.getElementById('search-form').reset();
+  }
+});
 
 $reviewsButton.addEventListener('click', function (e) {
   e.preventDefault();
@@ -170,7 +331,14 @@ $newButton.addEventListener('click', function (e) {
 
 $mangaAnime.addEventListener('click', function (e) {
   e.preventDefault();
+  $reviewFormTitle.textContent = 'New Manga Review';
   viewSwap('review-form');
+});
+
+$searchButton.addEventListener('click', function (e) {
+  e.preventDefault();
+  viewSwap('search-form');
+  document.getElementById('search-form').reset();
 });
 
 document.addEventListener('DOMContentLoaded', function (e) {
@@ -178,6 +346,13 @@ document.addEventListener('DOMContentLoaded', function (e) {
     var newMangaReviews = renderReview(data.reviews[review]);
     $ul.appendChild(newMangaReviews);
   }
+  viewSwap(data.view);
+});
+
+document.addEventListener('DOMContentLoaded', function (e) {
+  $mangaResultsList.textContent = '';
+  var newMangaResult = renderSearch(data.search[0]);
+  $mangaResultsList.appendChild(newMangaResult);
   viewSwap(data.view);
 });
 
@@ -201,4 +376,3 @@ document.getElementById('reviews').addEventListener('click', function (e) {
     $reviewFormTitle.textContent = 'Edit Review';
   }
 });
-$reviewForm.addEventListener('submit', reviewSubmit);

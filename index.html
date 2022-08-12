@@ -22,8 +22,9 @@
         <div class="column-half-navbar">
           <h2 class="color-green font-weight-400"><a href="#review-form" class="navbar-items" id="mangaAnime"><span class="color-white">M</span>anga &gt; Anime</a></h2>
         </div>
-        <div class="column-half-navbar">
-          <h3 class="color-green font-weight-400 justify-content-flex-end" id="reviews-button"><a href="#reviews" class="navbar-items">Reviews</a></h3>
+        <div class="column-half-navbar justify-content-flex-end">
+          <h3 class="color-green font-weight-400" id="reviews-button"><a href="#reviews" class="navbar-items margin-right-wide">Reviews</a></h3>
+          <h3 class="color-green font-weight-400" id="search-button"><a href="#search-view" class="navbar-items">Search</a></h3>
         </div>
       </div>
     </div>
@@ -105,7 +106,7 @@
         </div>
       </form>
     </div>
-    <div data-view="reviews" id="reviews" class="hidden">
+    <div data-view="reviews" id="reviews">
       <div class="container">
         <div class="row">
           <div class="column-full space-between align-items-baseline">
@@ -116,6 +117,32 @@
         <h3 class="empty-reviews font-weight-400 hidden">Empty.. Go read some manga!</h3>
         <ul class="no-bullets">
         </ul>
+      </div>
+    </div>
+    <div data-view="search-form">
+      <form action="index.html" method="get" id="search-form">
+        <div class="container">
+          <div class="row">
+            <div class="column-full">
+              <h1 class="font-weight-400">Search Manga</h1>
+              <label for="search-form"></label>
+              <div class="space-between align-items-baseline">
+                <input
+                type="text"
+                placeholder="Manga Title"
+                id="search-bar"
+                name="search-bar"
+                class="margin-right">
+                <button type="submit" class="button righteous" id="search-bar-button">SEARCH</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div data-view="search-results-view" id="search-results-view">
+      <div class="container">
+        <ul id="manga-results-list" class="no-bullets"></ul>
       </div>
     </div>
   </main>
