@@ -200,6 +200,27 @@ function searchManga(manga) {
   xhr.send();
 }
 
+function randomManga() {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', 'https://api.jikan.moe/v4/random/manga');
+  xhr.responseType = 'json';
+  xhr.addEventListener('load', function () {
+    var newRandom = {
+      image: xhr.response.data[0].images.jpg.image_url,
+      title: xhr.response.data[0].title,
+      author: xhr.response.data[0].authors[0].name,
+      chapters: xhr.response.data[0].chapters,
+      genres: xhr.response.data[0].genres[0].name,
+      synopsis: xhr.response.data[0].synopsis
+    };
+    data.random.unshift(newRandom);
+    var newRandomResult = renderSearch(newRandom);
+    $mangaResultsList.prepend(newRandomResult);
+  });
+  xhr.send();
+}
+
+randomManga();
 function renderSearch(search) {
   var $liManga = document.createElement('li');
   $liManga.setAttribute('class', 'padding margin-top-bottom');

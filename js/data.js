@@ -4,6 +4,7 @@ var data = {
   view: 'review-form',
   reviews: [],
   search: [],
+  random: [],
   editing: null,
   nextEntryId: 1
 };
