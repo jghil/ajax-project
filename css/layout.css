@@ -5,13 +5,13 @@
 .navbar-container {
   max-width: 575px;
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 0 2rem;
 }
 
 .container {
   max-width: 575px;
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 0 2rem;
 }
 
 .row {
@@ -132,10 +132,16 @@ textarea {
   text-align: center;
 }
 
-@media screen and (min-width: 576px) {
-  .navbar-container,
-  .container {
+.width-100 {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+@media screen and (min-width: 600px) {
+  .container,
+  .navbar-container {
     max-width: 1200px;
+    padding: 0 6rem;
   }
 
   .column-full,
@@ -158,6 +164,10 @@ textarea {
 
   .column-half-reviews {
     width: 50%;
+  }
+
+  .width-100 {
+    width: auto;
   }
 
   .column-half-navbar {

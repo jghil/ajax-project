@@ -15,6 +15,7 @@ var $mangaSearchForm = document.querySelector('#search-form');
 var $mangaResultsList = document.querySelector('#manga-results-list');
 var $searchButton = document.querySelector('#search-button');
 var $searchResultsView = document.querySelector('#search-results-view');
+var $randomMangaButton = document.querySelector('#random-manga-button');
 
 $newPhotoPreview.addEventListener('input', function (e) {
   $placeholderImage.setAttribute('src', e.target.value);
@@ -200,6 +201,30 @@ function searchManga(manga) {
   xhr.send();
 }
 
+function randomManga() {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', 'https://api.jikan.moe/v4/random/manga');
+  xhr.responseType = 'json';
+  xhr.addEventListener('load', function () {
+    var newRandom = {
+      image: xhr.response.data.images.jpg.image_url,
+      title: xhr.response.data.title,
+      author: xhr.response.data.authors[0].name,
+      chapters: xhr.response.data.chapters,
+      genres: xhr.response.data.genres[0].name,
+      synopsis: xhr.response.data.synopsis
+    };
+    $mangaResultsList.textContent = '';
+    data.search.unshift(newRandom);
+    var newRandomResult = randomSearch(newRandom);
+    $mangaResultsList.prepend(newRandomResult);
+    viewSwap('search-results-view');
+  });
+  xhr.send();
+}
+
+$randomMangaButton.addEventListener('click', randomManga);
+
 function renderSearch(search) {
   var $liManga = document.createElement('li');
   $liManga.setAttribute('class', 'padding margin-top-bottom');
@@ -296,6 +321,111 @@ function renderSearch(search) {
   var $searchSynopsisValue = document.createElement('p');
   $searchSynopsisValue.setAttribute('class', 'font-weight-400 roboto no-margin line-height');
   $searchSynopsisValue.textContent = search.synopsis;
+  $columnHalfMangaTwo.appendChild($searchSynopsisValue);
+
+  var $hr6 = document.createElement('hr');
+  $hr6.setAttribute('class', 'color-gray padding-bottom');
+  $columnHalfMangaTwo.appendChild($hr6);
+
+  return $liManga;
+}
+
+function randomSearch(random) {
+  var $liManga = document.createElement('li');
+  $liManga.setAttribute('class', 'padding margin-top-bottom');
+
+  var $divMangaRow = document.createElement('div');
+  $divMangaRow.setAttribute('class', 'row white-background-color');
+  $liManga.appendChild($divMangaRow);
+
+  var $columnHalfManga = document.createElement('div');
+  $columnHalfManga.setAttribute('class', 'column-half-reviews align-items-flex-start');
+  $divMangaRow.appendChild($columnHalfManga);
+
+  var $imgManga = document.createElement('img');
+  $imgManga.setAttribute('src', random.image);
+  $imgManga.setAttribute('class', 'images');
+  $columnHalfManga.appendChild($imgManga);
+
+  var $columnHalfMangaTwo = document.createElement('div');
+  $columnHalfMangaTwo.setAttribute('class', 'column-half padding-reviews');
+  $divMangaRow.appendChild($columnHalfMangaTwo);
+
+  var $searchTitle = document.createElement('h1');
+  $searchTitle.setAttribute('class', 'font-weight-400 righteous margin-top half-margin-bottom');
+  $searchTitle.textContent = random.title;
+  $columnHalfMangaTwo.appendChild($searchTitle);
+
+  var $hr1 = document.createElement('hr');
+  $hr1.setAttribute('class', 'color-gray');
+  $columnHalfMangaTwo.appendChild($hr1);
+
+  var $divRowSearchAuthor = document.createElement('div');
+  $divRowSearchAuthor.setAttribute('class', 'row align-items-baseline');
+  $columnHalfMangaTwo.appendChild($divRowSearchAuthor);
+
+  var $searchAuthor = document.createElement('h3');
+  $searchAuthor.setAttribute('class', 'color-green font-weight-400 margin-right no-margin');
+  $searchAuthor.textContent = 'Author:';
+  $divRowSearchAuthor.appendChild($searchAuthor);
+
+  var $searchAuthorValue = document.createElement('h3');
+  $searchAuthorValue.setAttribute('class', 'font-weight-400 roboto no-margin');
+  $searchAuthorValue.textContent = random.author;
+  $divRowSearchAuthor.appendChild($searchAuthorValue);
+
+  var $hr2 = document.createElement('hr');
+  $hr2.setAttribute('class', 'color-gray');
+  $columnHalfMangaTwo.appendChild($hr2);
+
+  var $divRowSearchChapters = document.createElement('div');
+  $divRowSearchChapters.setAttribute('class', 'row align-items-baseline');
+  $columnHalfMangaTwo.appendChild($divRowSearchChapters);
+
+  var $searchChapters = document.createElement('h3');
+  $searchChapters.setAttribute('class', 'color-green font-weight-400 margin-right no-margin');
+  $searchChapters.textContent = 'Chapters:';
+  $divRowSearchChapters.appendChild($searchChapters);
+
+  var $searchChaptersValue = document.createElement('h3');
+  $searchChaptersValue.setAttribute('class', 'font-weight-400 roboto no-margin');
+  $searchChaptersValue.textContent = random.chapters;
+  $divRowSearchChapters.appendChild($searchChaptersValue);
+
+  var $hr3 = document.createElement('hr');
+  $hr3.setAttribute('class', 'color-gray');
+  $columnHalfMangaTwo.appendChild($hr3);
+
+  var $divRowSearchGenre = document.createElement('div');
+  $divRowSearchGenre.setAttribute('class', 'row align-items-baseline');
+  $columnHalfMangaTwo.appendChild($divRowSearchGenre);
+
+  var $searchGenre = document.createElement('h3');
+  $searchGenre.setAttribute('class', 'color-green font-weight-400 margin-right no-margin');
+  $searchGenre.textContent = 'Genre:';
+  $divRowSearchGenre.appendChild($searchGenre);
+
+  var $searchGenreValue = document.createElement('h3');
+  $searchGenreValue.setAttribute('class', 'font-weight-400 roboto no-margin');
+  $searchGenreValue.textContent = random.genres;
+  $divRowSearchGenre.appendChild($searchGenreValue);
+
+  var $hr4 = document.createElement('hr');
+  $hr4.setAttribute('class', 'color-gray');
+  $columnHalfMangaTwo.appendChild($hr4);
+
+  var $searchSynopsis = document.createElement('h3');
+  $searchSynopsis.setAttribute('class', 'color-green font-weight-400 margin-right no-margin half-margin-bottom');
+  $searchSynopsis.textContent = 'Synopsis:';
+  $columnHalfMangaTwo.appendChild($searchSynopsis);
+
+  var $hr5 = document.createElement('hr');
+  $hr5.setAttribute('class', 'color-gray');
+  $columnHalfMangaTwo.appendChild($hr5);
+
+  var $searchSynopsisValue = document.createElement('p');
+  $searchSynopsisValue.setAttribute('class', 'font-weight-400 roboto no-margin line-height');
+  $searchSynopsisValue.textContent = random.synopsis;
   $columnHalfMangaTwo.appendChild($searchSynopsisValue);
 
   var $hr6 = document.createElement('hr');
